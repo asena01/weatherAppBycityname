@@ -83,7 +83,11 @@ export class BaseComponent implements OnInit {
           this.previousCountryName = this.countryinfo[0].name;
           if(this.previousCountryName == this.searchedCountryName) {
             this.isDataAvailable = true;
-          } else { this.isDataAvailable = false }
+          } else {
+            this.isDataAvailable = false;
+            this.noSearchQuery = false;
+            this.isSearchQuery = false;
+          }
         }
       });
   }
