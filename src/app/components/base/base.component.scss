@@ -34,10 +34,13 @@
 .imgFlag {
   margin: auto;
   width: 100%;
-  border: 3px solid #73AD21;
+  border: 1px solid $header-background;
   padding: 1px;
 }
 .imgFlag img {
   height: 200px;
+}
+.display-left {
+  width: 100%;
 }
 
