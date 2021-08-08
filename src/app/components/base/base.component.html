@@ -1,0 +1,50 @@
+<div class="searchContainer fixed-top">
+  <div class="row align-items-center">
+    <div class="col-12">
+      <app-search></app-search>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="margin-top: 150px;">
+  <div class="row">
+    <div class="col-12">
+      <div class="card" *ngIf="countryinfo.length>0">
+        <div class="row display-left">
+          <div class="col-5" style="display: flex">
+            <div class="imgFlag">
+              <img style="width: 100%" src="{{countryinfo[0].flag}}" class="card-img-top">
+            </div>
+          </div>
+          <div class="col-7">
+            <div class="card-body">
+              <ul class="list-group">
+                <li class="list-group-item list-header"><h5 class="card-title">{{countryinfo[0].name}}...<img class="float-end" style="width: 40px" src="{{countryinfo[0].flag}}"></h5></li>
+                <li class="list-group-item">Cabital city <button type="button" class="btn btn-outline-info float-end">{{countryinfo[0].capital}}</button></li>
+                <li class="list-group-item">Part of region <button type="button" class="btn btn-outline-info float-end">{{countryinfo[0].region}}</button></li>
+                <li class="list-group-item">Population <button type="button" class="btn btn-outline-info float-end">{{countryinfo[0].population}}</button></li>
+                <li class="list-group-item">Native name <button type="button" class="btn btn-outline-info float-end">{{countryinfo[0].nativeName}}</button></li>
+                <li class="list-group-item">Language <button type="button" class="btn btn-outline-info float-end">{{countryinfo[0].languages[0].name}}</button></li>
+              </ul>
+
+              <ul class="list-group" *ngIf="weatherInfo.length>0">
+                <li class="list-group-item list-header"><span class="card-title"><b>Current weahter
+                  {{countryinfo[0].capital}}..</b><small>{{weatherInfo[0].localtime}}</small>
+                  <img class="float-end" style="width: 40px" src="{{weatherInfo[0].weather_icons[0]}}"></span></li>
+                <li class="list-group-item">Tepmrature <button type="button" class="btn btn-outline-dark float-end">{{weatherInfo[0].temprature}} &#8451;</button></li>
+                <li class="list-group-item">Wind speed <button type="button" class="btn btn-outline-dark float-end">{{weatherInfo[0].wind_speed}} kmph</button></li>
+                <li class="list-group-item">Wind direction <button type="button" class="btn btn-outline-dark float-end">{{weatherInfo[0].wind_dir}}</button></li>
+                <li class="list-group-item">Pressure <button type="button" class="btn btn-outline-dark float-end">{{weatherInfo[0].pressure}} mb</button></li>
+                <li class="list-group-item">Humidity <button type="button" class="btn btn-outline-dark float-end">{{weatherInfo[0].humidity}} &#x00025;</button></li>
+                <li class="list-group-item">Feels like <button type="button" class="btn btn-outline-dark float-end">{{weatherInfo[0].feelslike}}</button></li>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
