@@ -20,18 +20,20 @@ import { countryReducer } from "./store/country/country.reducer";
 import { weatherReducer } from "./store/weather/weather.reducer";
 import { searchReducer } from "./store/search/search.reducer";
 
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+//import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CountryService } from "./services/country.service";
 import { WeatherService } from "./services/weather.service";
 import { environment } from "../environments/environment";
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     HeaderComponent,
-    BaseComponent
+    BaseComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
@@ -48,11 +50,11 @@ import { environment } from "../environments/environment";
                 search:searchReducer
                },
       ),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
-    }),
+    /*StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true,
+    }),*/
     TypeaheadModule.forRoot()
   ],
   providers: [ CountryService, WeatherService ],

@@ -1,3 +1,3 @@
 export interface SearchModel {
-  searchQuery: string;
+  searchQuery: 'Finland';
 }

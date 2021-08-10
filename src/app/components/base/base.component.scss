@@ -1,12 +1,5 @@
 @import '../../global/base-styles';
 
-.list-header {
-  background-color: $header-background;
-  color: white;
-  small{
-    font-size: 11px;
-  }
-}
 .searchContainer {
   background-color: #d8d8d8;
   padding: 10px;
@@ -23,24 +16,5 @@
 
 .fixed-top {
   top: 4.2em;
-}
-
-.card {
-  flex-direction: row;
-}
-.card img {
-  width: 30%;
-}
-.imgFlag {
-  margin: auto;
-  width: 100%;
-  border: 1px solid $header-background;
-  padding: 1px;
-}
-.imgFlag img {
-  height: 200px;
-}
-.display-left {
-  width: 100%;
 }
 

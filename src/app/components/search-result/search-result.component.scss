@@ -1,0 +1,28 @@
+@import '../../global/base-styles';
+.card {
+  flex-direction: row;
+}
+.list-header {
+  background-color: $header-background;
+  color: white;
+  small{
+    font-size: 11px;
+  }
+}
+.card img {
+  width: 30%;
+}
+.imgFlag {
+  margin: auto;
+  width: 100%;
+  border: 1px solid $header-background;
+  border-radius: 25%;
+  padding: 1px;
+}
+.imgFlag img {
+  height: 200px;
+  border-radius: 25%;
+}
+.display-left {
+  width: 100%;
+}

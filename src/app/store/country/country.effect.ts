@@ -13,6 +13,7 @@ export class CountryEffect{
   queryData$ = this.store.select((store) => store.search);
 
   searchQueary: any;
+  searchKey: any;
 
   constructor(private actions$: Actions,
               private countryService: CountryService,
@@ -32,7 +33,8 @@ export class CountryEffect{
         .countryInfo(this.searchQueary).pipe(
           map((countryinfo) => (
             this.countryData = <CountryModel>countryinfo,
-            {type: '[Country API] Country Api Success', countryInfo: this.countryData}))
+            {type: '[Country API] Country Api Success',
+              countryInfo: this.countryData }))
       ))
     )
   )

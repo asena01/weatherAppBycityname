@@ -24,7 +24,6 @@ export class SearchComponent implements OnInit {
 
   searchCurrentWeather() {
     this.setSearchQueryParams(this.searchString);
-    this.store.dispatch(new SetSearchQuery(this.searchString));
   }
 
   setSearchQueryParams(searchKey: string) {
