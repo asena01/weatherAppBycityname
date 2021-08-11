@@ -1,15 +1,19 @@
-import { on } from '@ngrx/store';
+import { createReducer, on } from "@ngrx/store";
+import { SetSearchQuery } from "./search.action";
+import { SearchModel } from "../../model/search.model";
 
-export const SET_SEARCH_QUERY = '[Search] set query';
+export const initialState: ReadonlyArray<SearchModel> = [];
+
+const _searchReducer = createReducer(
+  initialState,
+  on(SetSearchQuery, (state, action) =>{
+    return {
+      ...state,
+      searchQuery: action.searchQuery,
+    }
+  })
+)
 
 export function searchReducer(state: any, action: any) {
-  switch (action.type) {
-    case SET_SEARCH_QUERY:
-      return {
-        ...state,
-        searchQuery: action.payload
-      }
-    default:
-      return state;
-  }
+  return _searchReducer(state, action)
 }

@@ -50,7 +50,7 @@ export class BaseComponent implements OnInit {
             this.randomIndexCountry = this.getRandomIndexForCountrySelect(1, 100);
             this.searchKeyForBaseUrl = this.countryList.lists[this.randomIndexCountry];
 
-            this.store.dispatch(new SetSearchQuery(this.searchKeyForBaseUrl));
+            this.store.dispatch(SetSearchQuery({searchQuery: this.searchKeyForBaseUrl}));
             this.store.dispatch(invokeCountryApi());
             this.searchForCountry();
             this.store.dispatch(invokeWeatherApi());
@@ -63,7 +63,7 @@ export class BaseComponent implements OnInit {
             this.showLoading = this.spinnerStore.select(getLoading);
             this.searchedCountryName = search;
 
-            this.store.dispatch(new SetSearchQuery(search));
+            this.store.dispatch(SetSearchQuery({searchQuery: search}));
             this.store.dispatch(invokeCountryApi());
             this.searchForCountry();
             this.store.dispatch(invokeWeatherApi());
