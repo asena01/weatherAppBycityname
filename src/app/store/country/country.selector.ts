@@ -1,15 +1,10 @@
-import { createSelector } from '@ngrx/store';
-import { CountryModel } from "../../model/country.model";
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { AppState } from "../app.state";
 
+const countrySelector = createFeatureSelector<AppState>('country');
 
-export const countrySelector = (state: AppState) => state.country;
+export const countryByName = createSelector(countrySelector,(state) =>{
+  return state;
+  });
 
-export const countryByName = createSelector(
-  countrySelector,
-  (country: CountryModel[]) => {
-
-     return [...new Set(country)] ;
-  }
-);
 

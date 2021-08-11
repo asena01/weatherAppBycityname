@@ -7,3 +7,14 @@ export interface AppState {
   weather: WeatherDataModel[];
   search: SearchModel;
 }
+
+export interface SpinnerState {
+  showLoading: boolean;
+  errorMessage: string;
+}
+
+export const initialState: SpinnerState = {
+  showLoading: false,
+  errorMessage: '',
+}
+

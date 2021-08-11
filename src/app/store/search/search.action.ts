@@ -8,3 +8,5 @@ export class SetSearchQuery implements Action {
 }
 
 export type SetSearch = SetSearchQuery;
+
+

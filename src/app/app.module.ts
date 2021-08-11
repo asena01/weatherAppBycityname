@@ -11,21 +11,25 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './components/search/search.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { BaseComponent } from './components/base/base.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
+import { SpinnerComponent } from './layout/spinner/spinner.component';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { CountryEffect } from "./store/country/country.effect";
 import { WeatherEffect } from "./store/weather/weather.effect";
 import { countryReducer } from "./store/country/country.reducer";
 import { weatherReducer } from "./store/weather/weather.reducer";
 import { searchReducer } from "./store/search/search.reducer";
+import { SharedReducer } from "./store/spinner/spinner.reducer";
 
-//import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CountryService } from "./services/country.service";
 import { WeatherService } from "./services/weather.service";
 import { environment } from "../environments/environment";
-import { SearchResultComponent } from './components/search-result/search-result.component';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +37,8 @@ import { SearchResultComponent } from './components/search-result/search-result.
     SearchComponent,
     HeaderComponent,
     BaseComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -43,18 +48,18 @@ import { SearchResultComponent } from './components/search-result/search-result.
     HttpClientModule,
     FormsModule,
     EffectsModule.forRoot([CountryEffect, WeatherEffect]),
-    StoreModule.forRoot(
-      {
+    StoreModule.forRoot({
                 country: countryReducer,
                 weather: weatherReducer,
-                search:searchReducer
+                search: searchReducer,
+                shared: SharedReducer
                },
       ),
-    /*StoreDevtoolsModule.instrument({
+    StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
       autoPause: true,
-    }),*/
+    }),
     TypeaheadModule.forRoot()
   ],
   providers: [ CountryService, WeatherService ],

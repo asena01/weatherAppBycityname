@@ -1,82 +1,83 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store, select} from "@ngrx/store";
 import { ActivatedRoute } from "@angular/router";
+import { pluck } from "rxjs/internal/operators";
+import { Store, select} from "@ngrx/store";
+
 import { invokeCountryApi } from "../../store/country/country.action";
 import { invokeWeatherApi } from "../../store/weather/weather.action";
-import { AppState } from "../../store/app.state";
+import { setLoadingSpinner } from "../../store/spinner/spinner.action";
+import { SetSearchQuery } from "../../store/search/search.action";
+
 import { countryByName } from "../../store/country/country.selector";
 import { weatherName } from "../../store/weather/weather.selector";
-import { SetSearchQuery } from "../../store/search/search.action";
-import { pluck, takeUntil} from "rxjs/internal/operators";
+import { getErrorMessage, getLoading } from "../../store/spinner/spinner.selector";
+
+import { AppState } from "../../store/app.state";
+import { SpinnerState } from "../../store/app.state";
 import { CountryList } from "../../model/country-list";
-import { Subject } from "rxjs";
 
 @Component({
   selector: 'app-base',
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss']
 })
-export class BaseComponent implements OnInit, OnDestroy {
-  private unsubscribeAll: Subject<any> = new Subject<any>();
+export class BaseComponent implements OnInit {
   countryinfo: any;
-  weatherInfo: any;
-  previousCountryName = '';
-  searchedCountryName = '';
-  isDataAvailable = true;
   countryList = new CountryList();
-  searchKeyForBaseUrl = '';
-  searching = true;
+  weatherInfo: any;
+  searchKeyForBaseUrl: any;
   randomIndexCountry: any;
-
-  constructor(private store: Store<AppState>,
-              private actRoute: ActivatedRoute,
-              ) {}
+  showLoading: any;
+  errorMessage: any;
+  searchedCountryName: any;
 
   country_name$ = this.store.pipe(select(countryByName));
   weather_by_city$ = this.store.pipe(select(weatherName));
 
+  constructor(private store: Store<AppState>,
+              private spinnerStore: Store<SpinnerState>,
+              private actRoute: ActivatedRoute,
+              ) {}
+
   ngOnInit(): void {
-      this.actRoute.queryParams
+    this.actRoute.queryParams
         .pipe(
           pluck('search'))
         .subscribe(search => {
           if(!search) {
+            this.spinnerStore.dispatch(setLoadingSpinner({status: true}))
+            this.showLoading = this.spinnerStore.select(getLoading);
             this.randomIndexCountry = this.getRandomIndexForCountrySelect(1, 100);
             this.searchKeyForBaseUrl = this.countryList.lists[this.randomIndexCountry];
+
             this.store.dispatch(new SetSearchQuery(this.searchKeyForBaseUrl));
-            this.searchedCountryName = this.searchKeyForBaseUrl;
             this.store.dispatch(invokeCountryApi());
             this.searchForCountry();
             this.store.dispatch(invokeWeatherApi());
             this.searchForWeather();
+
+            this.errorMessage = this.spinnerStore.select(getErrorMessage);
           } else {
-            this.store.dispatch(new SetSearchQuery(search));
+
+            this.spinnerStore.dispatch(setLoadingSpinner({status: true}))
+            this.showLoading = this.spinnerStore.select(getLoading);
             this.searchedCountryName = search;
+
+            this.store.dispatch(new SetSearchQuery(search));
             this.store.dispatch(invokeCountryApi());
             this.searchForCountry();
             this.store.dispatch(invokeWeatherApi());
             this.searchForWeather();
+
+            this.errorMessage = this.spinnerStore.select(getErrorMessage);
           }
         });
   }
-  searchForCountry() {
-  this.searching = true;
-  this.country_name$
-    .pipe(takeUntil(this.unsubscribeAll))
-    .subscribe(
+
+ searchForCountry() {
+   this.country_name$.subscribe(
     data => {
       this.countryinfo = data;
-      if(this.countryinfo.length>0) {
-        this.previousCountryName = this.countryinfo[0].name;
-        if(this.previousCountryName == this.searchedCountryName) {
-          this.isDataAvailable = true;
-          this.searching = false;
-        }
-        else {
-          this.isDataAvailable = false;
-          this.searching = false;
-        }
-      }
     })
   }
 
@@ -92,8 +93,5 @@ export class BaseComponent implements OnInit, OnDestroy {
        maxRange = Math.floor(maxRange);
     return Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
   }
-  ngOnDestroy () {
-    this.unsubscribeAll.next();
-    this.unsubscribeAll.complete();
-  }
+
 }

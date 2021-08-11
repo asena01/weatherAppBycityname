@@ -6,6 +6,7 @@ import { AppState } from "../app.state";
 import { Store } from "@ngrx/store";
 
 import { WeatherDataModel } from "../../model/weather-data.model";
+import { SET_WEATHER_INFO, INVOKE_WEATHER_API } from "./weather.action";
 
 @Injectable()
 
@@ -26,14 +27,14 @@ export class WeatherEffect{
 
   getWeather$ = createEffect(() =>
     this.actions$.pipe(
-      ofType('[Weather Api] Invoke API'),
+      ofType(INVOKE_WEATHER_API),
       mergeMap(() =>
       this.weatherService.getWeatherInfo(this.selectCity)
         .pipe(
           map((weather) => (
             this.weatherData = weather,
               this.weatherData = <WeatherDataModel>weather,
-            {type: '[Weather API] Weather Api Succsess', weatherInfo: this.weatherData}))
+            {type: SET_WEATHER_INFO, weatherInfo: this.weatherData}))
           )
         )
       )

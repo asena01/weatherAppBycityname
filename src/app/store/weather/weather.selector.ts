@@ -1,13 +1,8 @@
-import { createSelector } from '@ngrx/store';
-import { WeatherDataModel } from "../../model/weather-data.model";
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { AppState } from "../app.state";
 
+const weatherSelector = createFeatureSelector<AppState>('weather');
 
-export const weatherSelector = (state: AppState) => state.weather;
-
-export const weatherName = createSelector(
-  weatherSelector,
-  (weather: WeatherDataModel[]) => {
-    return [...new Set(weather)] ;
-  }
-);
+export const weatherName = createSelector(weatherSelector,(state) =>{
+  return state;
+});
