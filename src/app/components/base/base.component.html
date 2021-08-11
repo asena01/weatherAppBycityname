@@ -9,11 +9,15 @@
   <app-spinner></app-spinner>
 </div>
 <div class="container" style="margin-top: 150px;">
-  <div class="alert alert-danger" *ngIf="errorMessage | async">
-    <p>No information available for <span style="color: red">{{searchedCountryName}}</span>... try another</p>
-  </div>
-  <div *ngIf="countryinfo.length>0">
-    <div *ngIf="countryinfo[0].name == searchedCountryName">
+  <ng-template #errMessage>
+    <div class="alert alert-danger">
+      <p>No information available for <span style="color: red">
+        {{searchedCountryName}}</span>... try another
+      </p>
+    </div>
+  </ng-template>
+  <div *ngIf="!(errorMessage | async); else errMessage">
+    <div *ngIf="countryinfo.length>0">
       <app-search-result
         [countryinfo]="countryinfo"
         [weatherInfo]="weatherInfo">

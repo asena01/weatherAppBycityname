@@ -30,7 +30,7 @@ export class BaseComponent implements OnInit {
   showLoading: any;
   errorMessage: any;
   searchedCountryName: any;
-
+  searchOnInitial = false;
   country_name$ = this.store.pipe(select(countryByName));
   weather_by_city$ = this.store.pipe(select(weatherName));
 
